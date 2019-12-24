@@ -35,5 +35,5 @@ with:
 Using a prebuild image from docker
 
 ```yaml
-uses: docker://mushus/golangci-linter:v1.0.0
+uses: docker://mushus/golangci-linter:1.0.0
 ```
