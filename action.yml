@@ -1,0 +1,17 @@
+name: GolangCI-Linter
+description: Lint your Go code with GolangCI-Lint
+author: Mushus
+branding:
+  icon: check-square
+  color: blue
+inputs:
+  config:
+    description: Path of the GolangCI-Lint config file
+    required: false
+  basePath:
+    description: Path of the Golang project root directory
+    required: false
+    default: .
+runs:
+  using: docker
+  image: Dockerfile

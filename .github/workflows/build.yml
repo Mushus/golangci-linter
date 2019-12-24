@@ -1,0 +1,19 @@
+name: Build
+on:
+  push:
+    tags:
+      - v*
+jobs:
+  build:
+    name: Build Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+      - run: |
+          export TAG="mushus/golangci-linter:${{ steps.get_version.outputs.VERSION }}"
+          docker login -u mushus -p ${{ secrets.DOCKERHUB_SECRET }}
+          docker build . -t $TAG
+          docker push $TAG
