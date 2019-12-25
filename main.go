@@ -29,7 +29,7 @@ type annotation struct {
 }
 
 func (a annotation) Output() string {
-	return fmt.Sprintf("::error file=%s,line=%d,col=%d::%s\n", a.file, a.line, a.col, a.text)
+	return fmt.Sprintf("::error file=%s,line=%d,col=%d::%s", a.file, a.line, a.col, a.text)
 }
 
 type config struct {
