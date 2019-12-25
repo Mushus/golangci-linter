@@ -46,7 +46,7 @@ func loadConfig() config {
 	}
 }
 
-func execGolangCILint(cfg config) ([]result.Issue, error) {
+func execGolangCILint(cfg config) (int, []result.Issue, error) {
 	args := []string{"run"}
 	if cfg.config != "" {
 		args = append(args, cfg.config)
@@ -59,19 +59,22 @@ func execGolangCILint(cfg config) ([]result.Issue, error) {
 	cmd.Dir = baseDir
 	r, err := cmd.StdoutPipe()
 	if err != nil {
-		return nil, fmt.Errorf("cannot get stdout: %w", err)
+		return -1, nil, fmt.Errorf("cannot get stdout: %w", err)
 	}
 	defer r.Close()
 	if err := cmd.Start(); err != nil {
-		return nil, fmt.Errorf("cannot execute lint: %w", err)
+		return -1, nil, fmt.Errorf("cannot execute lint: %w", err)
 	}
 
 	var rep report
 	if err := json.NewDecoder(r).Decode(&rep); err != nil {
-		return nil, fmt.Errorf("cannot parse result: %w", err)
+		return -1, nil, fmt.Errorf("cannot parse result: %w", err)
 	}
 
-	return rep.Issues, nil
+	cmd.Wait()
+	exitCode := cmd.ProcessState.ExitCode()
+
+	return exitCode, rep.Issues, nil
 }
 
 func createAnotations(cfg config, issues []result.Issue) []annotation {
@@ -99,7 +102,7 @@ func reportFailures(cfg config, failures []result.Issue) {
 func main() {
 	cfg := loadConfig()
 
-	issues, err := execGolangCILint(cfg)
+	exitStatus, issues, err := execGolangCILint(cfg)
 	if err != nil {
 		log.Fatalf("failed to execute golangci-lint: %v", err)
 	}
@@ -108,5 +111,5 @@ func main() {
 		reportFailures(cfg, issues)
 	}
 
-	os.Exit(0)
+	os.Exit(exitStatus)
 }
