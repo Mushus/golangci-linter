@@ -8,7 +8,7 @@ This action lints your Golang Project with GolangCI-Lint simply.
 
 ## Demo
 
-[demo](https://github.com/Mushus/golangci-linter/commit/2c532c7486a7dbb12096082d74c5f94273596325#annotation_9255967392559673)
+[Demo](https://github.com/Mushus/golangci-linter/commit/2c532c7486a7dbb12096082d74c5f94273596325#annotation_9255967392559673)
 
 ## Inputs
 
