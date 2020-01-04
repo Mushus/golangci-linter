@@ -40,7 +40,7 @@ with:
   config: .golangci.yml
 ```
 
-Using a prebuild image from docker
+Using a prebuild image from DockerHub
 
 ```yaml
 uses: docker://mushus/golangci-linter:1.1.0
