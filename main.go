@@ -81,7 +81,7 @@ func loadConfig() config {
 func execGolangCILint(cfg config) (int, []annotation, error) {
 	args := []string{"run"}
 	if cfg.config != "" {
-		args = append(args, cfg.config)
+		args = append(args, "--config", cfg.config)
 	}
 	args = append(args, "--out-format", "json")
 
