@@ -103,7 +103,7 @@ func execGolangCILint(cfg config) (int, []annotation, error) {
 	cmd0.Dir = baseDir
 	out, err := cmd0.Output()
 	fmt.Printf("%v\n", err)
-	fmt.Printf("%v\n", out)
+	fmt.Printf("%s\n", out)
 	cmd := exec.Command("golangci-lint", args...)
 	cmd.Dir = baseDir
 	r, err := cmd.StdoutPipe()
