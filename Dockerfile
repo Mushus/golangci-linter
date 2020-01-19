@@ -10,7 +10,9 @@ RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/i
 # Install from this repository
 ADD . /source
 WORKDIR /source
-RUN go build -o /entrypoint && rm -rf /source/*
+RUN cp /source/entrypoint.sh /entrypoint.sh && \
+    go build -o /usr/local/bin/golangci-linter && \
+    rm -rf /source/*
 WORKDIR /
 
-ENTRYPOINT ["/entrypoint"]
+ENTRYPOINT ["/entrypoint.sh"]
