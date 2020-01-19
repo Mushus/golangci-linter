@@ -98,6 +98,7 @@ func execGolangCILint(cfg config) (int, []annotation, error) {
 
 	baseDir := filepath.Join(cfg.workspace, cfg.basePath)
 	fmt.Printf("%v\n", args)
+	fmt.Printf("%v %v %v\n", baseDir, cfg.workspace, cfg.basePath)
 	cmd := exec.Command("golangci-lint", args...)
 	cmd.Dir = baseDir
 	r, err := cmd.StdoutPipe()
