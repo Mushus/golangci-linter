@@ -11,6 +11,6 @@ RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/i
 ADD . /source
 WORKDIR /source
 RUN go build -o /entrypoint && rm -rf /source/*
-WORKDIR /
+WORKDIR /github/workspace
 
 ENTRYPOINT ["/entrypoint"]
