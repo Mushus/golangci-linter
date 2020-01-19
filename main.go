@@ -1,8 +1,11 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
+	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
@@ -78,6 +81,14 @@ func loadConfig() config {
 	}
 }
 
+func decodeJSON(r io.Reader) (*report, error) {
+	var rep report
+	if err := json.NewDecoder(r).Decode(&rep); err != nil {
+		return nil, fmt.Errorf("cannot parse result: %w", err)
+	}
+	return &rep, nil
+}
+
 func execGolangCILint(cfg config) (int, []annotation, error) {
 	args := []string{"run"}
 	if cfg.config != "" {
@@ -86,7 +97,7 @@ func execGolangCILint(cfg config) (int, []annotation, error) {
 	args = append(args, "--out-format", "json")
 
 	baseDir := filepath.Join(cfg.workspace, cfg.basePath)
-
+	fmt.Printf("%v\n", args)
 	cmd := exec.Command("golangci-lint", args...)
 	cmd.Dir = baseDir
 	r, err := cmd.StdoutPipe()
@@ -98,8 +109,13 @@ func execGolangCILint(cfg config) (int, []annotation, error) {
 		return -1, nil, fmt.Errorf("cannot execute lint: %w", err)
 	}
 
+	b, err := ioutil.ReadAll(r)
+	fmt.Printf("%v\n", err)
+	fmt.Printf("%s\n", b)
+	r2 := bytes.NewReader(b)
+
 	var rep report
-	if err := json.NewDecoder(r).Decode(&rep); err != nil {
+	if err := json.NewDecoder(r2).Decode(&rep); err != nil {
 		return -1, nil, fmt.Errorf("cannot parse result: %w", err)
 	}
 
