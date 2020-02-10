@@ -5,6 +5,7 @@ This action lints your Golang Project with GolangCI-Lint simply.
 ## Feature
 
 * Output lint result as error annotations of GitHub Actions.
+* No `GITHUB_TOKEN` required to work this Github Actions.
 
 ## Demo
 
