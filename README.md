@@ -1,3 +1,10 @@
+# deprecated
+
+We strongly recommend using the official Github Actions.
+
+* [golangci/golangci-lint-action](https://github.com/golangci/golangci-lint-action)
+* [github/super-linter](https://github.com/github/super-linter)
+
 # golangci-linter
 
 This action lints your Golang Project with GolangCI-Lint simply.
