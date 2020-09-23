@@ -1,4 +1,4 @@
-# deprecated
+# Deprecated
 
 We strongly recommend using the official Github Actions.
 
